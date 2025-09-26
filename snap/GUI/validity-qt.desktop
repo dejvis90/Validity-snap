@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Name=Validity
+Comment=Validity QT wallet
+Exec=validity.qt %u
+Terminal=false
+Type=Application
+Icon=${SNAP}/share/pixmaps/bitcoin.png
+MimeType=x-scheme-handler/validity;
+Categories=Office;Finance;P2P;Network;Qt;
+StartupWMClass=validity-qt
