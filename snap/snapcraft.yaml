@@ -1,20 +1,26 @@
-name: Validity
+name: validity
 title: 'Validity QT Wallet'
 version: '13.2.1.0'
 summary: proof of stake decentralized digital currency
 description: |
-  Validity is a decentralised digital currency with near-instant transaction speeds and negligible transaction fees built upon Proof of Stake 3.0 (PoSV3, BPoS) as introduced by the Validity development team.
+  Validity is a decentralised digital currency with near-instant transaction speeds
+  and negligible transaction fees built upon Proof of Stake 3.0 (PoSV3, BPoS)
+  as introduced by the Validity development team.
 
-For more information about Validity itself, see https://validitytech.com.
+  For more information about Validity itself, see https://validitytech.com.
 
-What is Validity?
-Validity is the name of open source software which enables the use of this currency. It takes Validity to the next level by building upon Bitcoin Core 0.13.2 with some patches from newer Bitcoin Core versions to offer performance enhancements, wider compatibility with third party services and a more advanced base.
+  What is Validity?
+  Validity is the name of open source software which enables the use of this currency.
+  It takes Validity to the next level by building upon Bitcoin Core 0.13.2 with some
+  patches from newer Bitcoin Core versions to offer performance enhancements, wider
+  compatibility with third-party services and a more advanced base.
 
-For more information, as well as an immediately useable, binary version of the Validity More software, see https://validitytech.com.
+  For more information, as well as an immediately usable, binary version of the Validity
+  software, see https://validitytech.com.
 contact: support@validitytech.com
 issues: https://github.com/dejvis90/Validity-snap/issues
 source-code: https://github.com/dejvis90/Validity-snap.git
-icon: snap/GUI/logo.png
+icon: snap/gui/logo.png
 license: MIT
 
 grade: stable
@@ -53,7 +59,7 @@ parts:
       - qtbase5-dev
       - dpkg-dev
     stage-packages:
-      # Boost 1.71 (required by your 20.04 binary)
+      # Boost 1.71 
       - libboost-system1.71.0
       - libboost-filesystem1.71.0
       - libboost-thread1.71.0
@@ -75,11 +81,12 @@ parts:
       - libqrencode4
       # Protocol Buffers
       - libprotobuf17
-      # OpenSSL 1.1 (required by 20.04 binaries)
+      # OpenSSL 1.1 
       - libssl1.1
-      - libcrypto1.1
       # libevent
       - libevent-pthreads-2.1-7
+      - libevent-2.1-7
+      - libminiupnpc17
       # GUI helpers / desktop environment
       - libxkbcommon0
       - fonts-ubuntu
@@ -95,7 +102,7 @@ parts:
       - xdg-user-dirs
       - fcitx-frontend-qt5
 
-  blackcoin:
+  validity:
     plugin: nil
     override-build: | 
       env | grep SNAP
