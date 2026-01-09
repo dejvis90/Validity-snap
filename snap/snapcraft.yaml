@@ -1,4 +1,4 @@
-name: validity
+name: validitytech
 title: 'Validity QT Wallet'
 version: '13.2.1.0'
 summary: proof of stake decentralized digital currency
@@ -102,7 +102,7 @@ parts:
       - xdg-user-dirs
       - fcitx-frontend-qt5
 
-  validity:
+  validitytech:
     plugin: nil
     override-build: | 
       env | grep SNAP
