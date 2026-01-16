@@ -1,0 +1,118 @@
+name: validitytech
+title: 'Validity QT Wallet'
+version: '13.2.1.0'
+summary: proof of stake decentralized digital currency
+description: |
+  Validity is a decentralised digital currency with near-instant transaction speeds
+  and negligible transaction fees built upon Proof of Stake 3.0 (PoSV3, BPoS)
+  as introduced by the Validity development team.
+
+  For more information about Validity itself, see https://validitytech.com.
+
+  What is Validity?
+  Validity is the name of open source software which enables the use of this currency.
+  It takes Validity to the next level by building upon Bitcoin Core 0.13.2 with some
+  patches from newer Bitcoin Core versions to offer performance enhancements, wider
+  compatibility with third-party services and a more advanced base.
+
+  For more information, as well as an immediately usable, binary version of the Validity
+  software, see https://validitytech.com.
+contact: support@validitytech.com
+issues: https://github.com/dejvis90/Validity-snap/issues
+source-code: https://github.com/dejvis90/Validity-snap.git
+icon: snap/gui/logo.png
+license: MIT
+
+grade: stable
+confinement: strict
+base: core20
+compression: lzo
+architectures:
+  - build-on: amd64
+    run-on: amd64
+  - build-on: arm64
+    run-on: arm64
+  - build-on: armhf
+    run-on: armhf
+
+apps:
+  qt:
+    command: bin/desktop-launch $SNAP/bin/validity-qt
+    plugs: [home, removable-media, network, network-bind, desktop, x11, unity7]
+    environment:
+      HOME: $SNAP_USER_COMMON
+      DISABLE_WAYLAND: 1
+
+parts:
+  # Needed to supply desktop-launch
+  # Paste from https://github.com/ubuntu/snapcraft-desktop-helpers/blob/master/snapcraft.yaml
+  # Boilerplate seems to be required according to https://bugs.launchpad.net/snapcraft/+bug/1800057
+  desktop-qt5:
+    source: https://github.com/ubuntu/snapcraft-desktop-helpers.git
+    source-depth: 1
+    source-subdir: qt
+    source-commit: ec861254c2a1d2447b2c589446e6cdf04c75c260
+    plugin: make
+    make-parameters: ["FLAVOR=qt5"]
+    build-packages:
+      - build-essential
+      - qtbase5-dev
+      - dpkg-dev
+    stage-packages:
+      # Boost 1.71 
+      - libboost-system1.71.0
+      - libboost-filesystem1.71.0
+      - libboost-thread1.71.0
+      - libboost-program-options1.71.0
+      - libboost-chrono1.71.0
+      - libboost-date-time1.71.0
+      - libboost-regex1.71.0
+      - libboost-test1.71.0
+      # ZeroMQ
+      - libzmq5
+      # Qt5 libraries (for GUI)
+      - libqt5network5
+      - libqt5widgets5
+      - libqt5gui5
+      - libqt5dbus5
+      - libqt5core5a
+      - libqt5svg5
+      # QR code
+      - libqrencode4
+      # Protocol Buffers
+      - libprotobuf17
+      # OpenSSL 1.1 
+      - libssl1.1
+      # libevent
+      - libevent-pthreads-2.1-7
+      - libevent-2.1-7
+      - libminiupnpc17
+      # GUI helpers / desktop environment
+      - libxkbcommon0
+      - fonts-ubuntu
+      - ttf-ubuntu-font-family
+      - dmz-cursor-theme
+      - gtk2-engines-murrine
+      - light-themes
+      - adwaita-icon-theme
+      - gtk2-engines-pixbuf
+      - gnome-themes-standard
+      - shared-mime-info
+      - locales-all
+      - xdg-user-dirs
+      - fcitx-frontend-qt5
+
+  validitytech:
+    plugin: nil
+    override-build: | 
+      env | grep SNAP
+      wget https://github.com/RadiumCore/Validity/releases/download/${SNAPCRAFT_PROJECT_VERSION}/validity-${SNAPCRAFT_PROJECT_VERSION}-${SNAPCRAFT_ARCH_TRIPLET}.tar.xz
+      tar -xvf validity-${SNAPCRAFT_PROJECT_VERSION}-${SNAPCRAFT_ARCH_TRIPLET}.tar.xz
+      BINDIR=validity-${SNAPCRAFT_PROJECT_VERSION}-${SNAPCRAFT_ARCH_TRIPLET}
+      install -m 0755 -D -t $SNAPCRAFT_PART_INSTALL/bin $BINDIR/validity-qt
+      wget https://raw.githubusercontent.com/RadiumCore/Validity/refs/heads/main/src/qt/res/icons/bitcoin.png
+      install -m 0644 -D -t $SNAPCRAFT_PART_INSTALL/share/pixmaps bitcoin.png
+    build-packages:
+      - wget
+    after:
+      - desktop-qt5
