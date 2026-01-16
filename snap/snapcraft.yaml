@@ -20,7 +20,7 @@ description: |
 contact: support@validitytech.com
 issues: https://github.com/dejvis90/Validity-snap/issues
 source-code: https://github.com/dejvis90/Validity-snap.git
-icon: snap/gui/logo.png
+icon: snap/GUI/logo.png
 license: MIT
 
 grade: stable
